@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.com/Grishameister/HW-2.svg?branch=making-hw-2)](https://travis-ci.com/Grishameister/HW-2)
-[![Coverage Status](https://coveralls.io/repos/github/Grishameister/APO_11_C_CPP_HW/badge.svg?branch=making-hw-2)](https://coveralls.io/github/Grishameister/APO_11_C_CPP_HW?branch=making-hw-2)
+[![Coverage Status](https://coveralls.io/repos/github/Grishameister/HW-2/badge.svg?branch=making-hw-2)](https://coveralls.io/github/Grishameister/HW-2?branch=making-hw-2)
 
 Выполнил Григорий Ролдугин, группа АПО-11.
 

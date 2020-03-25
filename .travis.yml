@@ -1,0 +1,47 @@
+dist:     trusty
+sudo:     required
+
+language: c 
+
+
+os:
+  - linux
+
+compiler:
+
+  - gcc
+
+
+
+addons:
+  apt:
+    packages:
+      - valgrind
+      - cppcheck
+      - make
+      - cmake
+      - libgtest-dev
+      - lcov
+
+script:
+  # скрипт сборки и тестирования проекта:
+  - pip install --user cpp-coveralls
+  - mkdir build
+  - cd build
+  - cmake -DENABLE_COVERAGE=ON ..
+  - cmake --build .
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --tool=memcheck --leak-check=full ./test/project_test ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./write_test ../test/data/btests_emails_big.eml ; fi
+  - cd ..
+  - rm -rf build
+  - mkdir build
+  - cd build
+  - cmake -DENABLE_PARALLEL=ON -DENABLE_COVERAGE=ON ..
+  - cmake --build .
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --tool=memcheck --leak-check=full ./test/project_test ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./read_test ../test/data/btests_emails_big.eml ; fi
+  - cd ..
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cppcheck --enable=all --error-exitcode=1 -I parallel_lib/include consistent_lib/include --suppress=missingIncludeSystem ./parallel_lib ./consistent_lib main.c --check-config ; fi
+
+after_success:
+  - coveralls --root .. --build-root . -E ".*CMakeFiles.*" -E ".*googletest*" --gcov /usr/bin/gcov --gcov-options '\-lp'

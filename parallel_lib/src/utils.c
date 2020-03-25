@@ -199,7 +199,7 @@ int parse_text(const char* path_to_text, char** directory) {
                 munmap(ptr, st.st_size);
                 fclose(text);
                 free(max);
-                _Exit(ERR_FIND_STR);
+                exit(ERR_FIND_STR);
             }
             size_t size_str = strlen(max);
             write(fd[1], max, size_str + 1);
@@ -207,7 +207,7 @@ int parse_text(const char* path_to_text, char** directory) {
             munmap(ptr, st.st_size);
             fclose(text);
             free(max);
-            _Exit(0);
+            exit(0);
         }
         if (pid > 0) {
             i++;
